@@ -8,12 +8,6 @@ var main = d3.select('body').append('svg')
 
 
 
-// var makeCircle = function (x, y) {
-//   d3.select('svg').append('circle')
-//   .attr('cx', x)
-//   .attr('cy', y)
-//   .attr('r', 15);
-// };
 
 // made an array of objects with a x y and r value
 // entered array into the select all
@@ -46,11 +40,12 @@ var move = function() {
     circles
       .transition()
       .duration(2000)
-      .attr('cx', function(){return Math.random() * 950})
-      .attr('cy', function(){return Math.random() * 950})
+      .attr('cx', function(){return Math.random()*950})
+      .attr('cy', function(){return Math.random()*950})
+      .each('end', move)
 };
 
-setInterval(move, 2000);
+move();
 
 
 //d3.select('svg').append('add');
