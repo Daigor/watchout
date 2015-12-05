@@ -74,6 +74,20 @@ var increaseScore = function() {
   curScore.text(oldScore);
 };
 
+var throttle = function () {
+  var called = false;
+  var collisionTag = d3.select('.collisions').select('span');
+  return function() {
+    if (!called) {
+      collisionTag.text(parseInt(collisionTag.text(), 10) + 1);
+      called = true;
+      setTimeout(function() { return called = false;}, 1000);
+    }
+  };
+  increment(); 
+}
+var func = throttle();
+
 var collisions = function(){
   var matrix = circles[0]
   var playerX = player[0][0].attributes.cx.value;
@@ -86,7 +100,7 @@ var collisions = function(){
     // sqrt((pX - x)^2 + (py - y)^2)
     var distance = Math.sqrt(Math.pow((playerX - xCoord), 2) + Math.pow((playerY - yCoord), 2));
     if (distance < 25) {
-      console.log('COLLISION');
+      func();
       var highScore = d3.select('.high').select('span');
       var curScore = d3.select('.current').select('span'); 
       if (parseInt(highScore.text(), 10) < parseInt(curScore.text(), 10)) {
