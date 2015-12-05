@@ -35,13 +35,23 @@ var numberOfCircles = function(number){
 //array of objects of circle attributes
 var enemies = numberOfCircles(20);
 
-d3.select('svg').append('g').selectAll('circle').data(enemies)
+var circles = d3.select('svg').selectAll('circle').data(enemies)
   .enter()
   .append('circle')
   .attr('cx', function(d){ return d.cx })
-  .attr('cy', function(d){ return d.cy})
-  .attr('r', function(d){ return d.r})
-  
+  .attr('cy', function(d){ return d.cy })
+  .attr('r', function(d){ return d.r })
+
+var move = function() {
+    circles
+      .transition()
+      .duration(2000)
+      .attr('cx', function(){return Math.random() * 950})
+      .attr('cy', function(){return Math.random() * 950})
+};
+
+setInterval(move, 2000);
+
 
 //d3.select('svg').append('add');
 
