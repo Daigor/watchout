@@ -2,8 +2,8 @@
 
 //objects that move from one position to another randomly
 var main = d3.select('body').append('svg')
-  .attr('width', 1000)
-  .attr('height', 1000);
+  .attr('width', 700)
+  .attr('height', 700);
 
 
 
@@ -14,14 +14,11 @@ var main = d3.select('body').append('svg')
 var numberOfCircles = function(number){
   var result = [];
   for(var i = 0; i < number; i++){
-    var randomX = Math.random()*950
-    var randomY = Math.random()*950
+    var randomX = Math.random()*650
+    var randomY = Math.random()*650
     var circleAttributes = {};
-    var height = randomY;
-    var width = randomX;
-    circleAttributes.cx = width;
-    circleAttributes.cy = height;
-    circleAttributes.r = 10;
+    circleAttributes.cx = randomX;
+    circleAttributes.cy = randomY;
     result.push(circleAttributes);
   }
   return result;
@@ -29,23 +26,50 @@ var numberOfCircles = function(number){
 //array of objects of circle attributes
 var enemies = numberOfCircles(20);
 
-var circles = d3.select('svg').selectAll('circle').data(enemies)
+var circles = d3.select('svg').selectAll('image').data(enemies)
   .enter()
-  .append('circle')
-  .attr('cx', function(d){ return d.cx })
-  .attr('cy', function(d){ return d.cy })
-  .attr('r', function(d){ return d.r })
+  .append('image')
+  .attr('x', function(d){ return d.cx })
+  .attr('y', function(d){ return d.cy })
+  .attr('height', '20px')
+  .attr('width', '20px')
+  .attr('xlink:href', 'asteroid.png');
+
+var drag = d3.behavior.drag()
+  .on('dragstart', function() {
+    player.style('fill', 'blue')
+  })
+  .on('drag', function() {
+    player.attr('cx', d3.event.x)
+      .attr('cy', d3.event.y)
+  })
+  .on('dragend', function() {
+    player.style('fill', 'red')
+  });
+
+
+var player = d3.select('svg')
+    .append('circle')
+    .attr('cx', 250)
+    .attr('cy', 250)
+    .attr('r', 15)
+    .style('fill', 'red')
+    .call(drag);
 
 var move = function() {
     circles
       .transition()
       .duration(2000)
-      .attr('cx', function(){return Math.random()*950})
-      .attr('cy', function(){return Math.random()*950})
+      .attr('x', function(){return Math.random()*650})
+      .attr('y', function(){return Math.random()*650})
       .each('end', move)
 };
-
 move();
+
+
+
+
+
 
 
 //d3.select('svg').append('add');
