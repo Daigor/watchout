@@ -67,10 +67,38 @@ var move = function() {
 move();
 
 
+var increaseScore = function() {
+  var curScore = d3.select('.current').select('span');
+  var oldScore = curScore.text();
+  oldScore = parseInt(oldScore, 10) + 1;
+  curScore.text(oldScore);
+};
 
+var collisions = function(){
+  var matrix = circles[0]
+  var playerX = player[0][0].attributes.cx.value;
+  var playerY = player[0][0].attributes.cy.value;
+  for(var i = 0; i < matrix.length; i++){
+    var asteroid = matrix[i];
+    var xCoord = asteroid.attributes.x.value;
+    var yCoord = asteroid.attributes.y.value;
+    // Math.pow(playerX - xCoord, 2) + Math.pow(playerY - yCorrd, 2)
+    // sqrt((pX - x)^2 + (py - y)^2)
+    var distance = Math.sqrt(Math.pow((playerX - xCoord), 2) + Math.pow((playerY - yCoord), 2));
+    if (distance < 25) {
+      console.log('COLLISION');
+      var highScore = d3.select('.high').select('span');
+      var curScore = d3.select('.current').select('span'); 
+      if (parseInt(highScore.text(), 10) < parseInt(curScore.text(), 10)) {
+        highScore.text(parseInt(curScore.text(), 10));
+      }
+      curScore.text(0);
+    }
+  }
 
-
-
+}
+d3.timer(collisions);
+setInterval(increaseScore, 200);
 
 //d3.select('svg').append('add');
 
