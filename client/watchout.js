@@ -5,10 +5,6 @@ var main = d3.select('body').append('svg')
   .attr('width', 700)
   .attr('height', 700);
 
-
-
-
-
 // made an array of objects with a x y and r value
 // entered array into the select all
 var numberOfCircles = function(number){
@@ -33,7 +29,8 @@ var circles = d3.select('svg').selectAll('image').data(enemies)
   .attr('y', function(d){ return d.cy })
   .attr('height', '20px')
   .attr('width', '20px')
-  .attr('xlink:href', 'asteroid.png');
+  .attr('xlink:href', 'asteroid.png')
+  .attr('class', 'asteroid');
 
 var drag = d3.behavior.drag()
   .on('dragstart', function() {

@@ -7,5 +7,15 @@ svg {
   display: block;
   margin: auto;
 }
+.asteroid {
+  -webkit-animation: spin 1s linear infinite;
+  transform-origin: initial;
+}
+
+@keyframes spin { 
+  100% { 
+    -webkit-transform: rotate(360deg);
+  }
+}
 /* Note: an asteroid image is included in this repo.
 Feel free to use it if you like. */
